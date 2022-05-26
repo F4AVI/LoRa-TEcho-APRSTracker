@@ -204,8 +204,10 @@ void loop()
         
         // Conversion Latitude
         int lat_tmp1 = latitude_mdeg;
-        int lat_tmp2 = abs(latitude_mdeg*1000000) - (abs(lat_tmp1)*1000000);
-        float lat_tmp3 = float(lat_tmp2) * 0.00006;
+        float lat_tmp2 = abs(latitude_mdeg) - abs(lat_tmp1);
+        float lat_tmp3 = lat_tmp2 *60;
+        char lat_tmp4[6] = "";
+        snprintf(lat_tmp4, sizeof(lat_tmp4),"%.2f",lat_tmp3);
         
         if (latitude_mdeg < 0)
         {
@@ -215,12 +217,30 @@ void loop()
         {
           HLat = 'N';        
         }
-        snprintf(Lat, sizeof(Lat), "%02d%.2f%c", abs(lat_tmp1),lat_tmp3,HLat);
+        snprintf(Lat, sizeof(Lat), "%02d%05s%c", abs(lat_tmp1),lat_tmp4,HLat);
+
+        if (Debug == 1)
+         {
+          SerialMon.print("latitude_mdeg : ");
+          SerialMon.println(latitude_mdeg);
+          SerialMon.print("lat_tmp1 : ");
+          SerialMon.println(lat_tmp1);
+          SerialMon.print("lat_tmp2 : ");
+          SerialMon.println(lat_tmp2);             
+          SerialMon.print("lat_tmp3 : ");
+          SerialMon.println(lat_tmp3);
+          SerialMon.print("lat_tmp4 : ");
+          SerialMon.println(lat_tmp4);        
+          SerialMon.print("Lat : ");
+          SerialMon.println(Lat);
+         }
         
         // Conversion Longitude
         int long_tmp1 = longitude_mdeg;
-        int long_tmp2 = abs(longitude_mdeg*1000000) - (abs(long_tmp1)*1000000);
-        float long_tmp3 = float(long_tmp2) * 0.00006;
+        float long_tmp2 = abs(longitude_mdeg) - abs(long_tmp1);
+        float long_tmp3 = float(long_tmp2) * 60;
+        char long_tmp4[6] = "";
+        snprintf(long_tmp4, sizeof(long_tmp4),"%.2f",long_tmp3);        
         
         if (longitude_mdeg < 0)
         {
@@ -230,9 +250,24 @@ void loop()
         {
           MLong = 'E';
         }
-        snprintf(Long, sizeof(Long), "%03d%.2f%c", abs(long_tmp1),long_tmp3,MLong);
+        snprintf(Long, sizeof(Long), "%03d%05s%c", abs(long_tmp1),long_tmp4,MLong);
 
-                        
+        if (Debug == 1)
+         {
+          SerialMon.print("longitude_mdeg : ");
+          SerialMon.println(longitude_mdeg);
+          SerialMon.print("long_tmp1 : ");
+          SerialMon.println(long_tmp1);
+          SerialMon.print("long_tmp2 : ");
+          SerialMon.println(long_tmp2);             
+          SerialMon.print("long_tmp3 : ");
+          SerialMon.println(long_tmp3);
+          SerialMon.print("long_tmp4 : ");
+          SerialMon.println(long_tmp4);        
+          SerialMon.print("Long : ");
+          SerialMon.println(Long);   
+         }
+                                  
         display.setCursor(0,40);
         display.print("Lat. : ");
         display.println(LatStr);
